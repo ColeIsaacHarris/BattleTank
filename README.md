@@ -6,3 +6,5 @@ An open world tank battle game featuring AI, and advanced controls. Local and on
 ## Lecture List
 * BT01 Section Introduction, Repo Setup
 * BT02 Game Design Document (GDD)
+* BT03 Clone GitHub repo to local
+
