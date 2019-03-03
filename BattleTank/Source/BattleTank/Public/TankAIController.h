@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "Engine/World.h"
+#include "Runtime/Engine/Classes/Engine/World.h"
 #include "GameFramework/Actor.h"
 #include "Tank.h"
 #include "CoreMinimal.h"
@@ -17,12 +17,21 @@ UCLASS()
 class BATTLETANK_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
+
+public:
+
+	ATank * GetControlledTank() const;
 	
 private:
-	ATank* GetControlledTank() const;
+	
+	// Aims toward current player
+	void AimTowardsPlayer();
 
+	// called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	// called at begin play
 	virtual void BeginPlay() override;
 
-	ATank* GetPlayerTank() const;
 };
 

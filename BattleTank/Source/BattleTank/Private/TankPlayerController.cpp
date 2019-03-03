@@ -4,6 +4,7 @@
 
 void ATankPlayerController::BeginPlay()
 {
+	Super::BeginPlay();
 	auto ControlledTank = GetControlledTank();
 	if (!ControlledTank){
 		UE_LOG(LogTemp, Warning, TEXT("PlayerController is not possessing a Tank"), ControlledTank);
@@ -28,13 +29,11 @@ void ATankPlayerController::AimTowardsCrosshair()
 {
 	if (!GetControlledTank()) { return; }
 
-	FVector HitLocation; // out parameter
-	if (GetSightRayHitLocation(HitLocation)) 
+	FVector OutHitLocation(0); // Out parameter
+	if (GetSightRayHitLocation(OutHitLocation))
 	{
-		// UE_LOG(LogTemp, Warning, TEXT("Look Direction: %s"), *HitLocation.ToString());
-		// If it hits the landscape
-			// Tell the controlled tank to aim at this point
-	};
+		GetControlledTank()->AimAt(OutHitLocation);
+	}
 }
 
 // Get world location of linetrace intersection with landscape, returns true if it hits landscape
@@ -47,31 +46,31 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 
 	// "De-Project the screen position of the reticle to world space
 	FVector LookDirection;
-	FVector HitLocation;
 	if (GetLookDirection(ReticleScreenLocation, LookDirection)) 
 	{
 		// line trace along  and see what we hit
-		GetLookVectorHitLocation(HitLocation, LookDirection);
-		UE_LOG(LogTemp, Warning, TEXT("Hit Location is: %s"), *(HitLocation.ToString()));
-	};	
-
-	return true;
+		return GetLookVectorHitLocation(OutHitLocation, LookDirection);
+	}
+	return false;
 }
 
-bool ATankPlayerController::GetLookVectorHitLocation(FVector& HitLocation, FVector LookDirection) const
+bool ATankPlayerController::GetLookVectorHitLocation(FVector& OutHitLocation, FVector LookDirection) const
 {
 	FHitResult HitResult;
-	FVector StartLocation = PlayerCameraManager->GetCameraLocation();
-	FVector EndLocation = StartLocation + (LookDirection * LineTraceRange);
-	if (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECollisionChannel::ECC_Visibility))
+	auto StartLocation = PlayerCameraManager->GetCameraLocation();
+	auto EndLocation = StartLocation + (LookDirection * LineTraceRange);
+	if (GetWorld()->LineTraceSingleByChannel(
+		HitResult,
+		StartLocation,
+		EndLocation,
+		ECollisionChannel::ECC_Visibility)
+		)
 	{
-		HitLocation = HitResult.ImpactPoint;
+		OutHitLocation = HitResult.Location;
 		return true;
 	}
-	else
-	{
-		return false;
-	};
+	OutHitLocation = FVector(0);
+	return false; // line trace did not succeed
 }
 
 // Gets a vector from the screen position of the Reticle (ReticleScreenLocation)

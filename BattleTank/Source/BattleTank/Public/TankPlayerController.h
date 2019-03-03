@@ -19,14 +19,14 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 public:
 	// gets controlled tank
 	ATank * GetControlledTank() const;
-	
-	// called on begin play
-	virtual void BeginPlay() override;
+
+private:
 
 	// called every frame
 	virtual void Tick(float DeltaTime) override;
 
-private:
+	//called on begin play
+	virtual void BeginPlay() override;
 
 	// Aims toward crosshair, finds intersection with world/enemy
 	void AimTowardsCrosshair();
@@ -44,6 +44,5 @@ private:
 	float LineTraceRange = 1000000;
 
 	bool GetLookDirection(FVector2D ScreenLocation, FVector & LookDirection) const;
-
-	bool GetLookVectorHitLocation(FVector& HitLocation, FVector LookDirection) const;
+	bool GetLookVectorHitLocation(FVector& OutHitLocation, FVector LookDirection) const;
 };
