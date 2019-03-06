@@ -25,8 +25,7 @@ public:
 
 	void SetTurretReference(UTankTurret* TurretToSet);
 
-	// TODO add SetTurretReference
-
+	// Calculates a HitLocation based on the LaunchSpeed and moves the barrel and turret to aim at that HitLocation
 	void AimAt(FVector HitLocation, float LaunchSpeed);
 
 private:
@@ -34,7 +33,6 @@ private:
 
 	UTankTurret* Turret = nullptr;
 	
+	// Takes in AimDirection from AimAt and calls move/rotate functions on both Barrel and Turret respectively with appropriate rotation values
 	void MoveBarrelTowards(FVector AimDirection);
-
-	void MoveTurretTowards(FVector AimDirection);
 };

@@ -27,7 +27,7 @@ private:
 	//called on begin play
 	virtual void BeginPlay() override;
 
-	// Aims toward crosshair, finds intersection with world/enemy
+	// Calls GetSightRayHitLocation returning Line Trace OutHitLocation, then calls Tank AimAt feeding in OutHitLocation
 	void AimTowardsCrosshair();
 
 	// Get and return the location of linetrace intersection through crosshair to landscape

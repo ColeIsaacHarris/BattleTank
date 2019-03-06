@@ -15,15 +15,10 @@ class BATTLETANK_API UTankTurret : public UStaticMeshComponent
 	GENERATED_BODY()
 	
 public:
-	void RotateTurret(float RelativeSpeed);
+	// Rotates the turret Yaw to point toward AimDirection fed in by AimingComponent
+	void RotateTurret(float RelativeSpeed); 
 	
 private:
 	UPROPERTY(EditAnywhere)
-		float MaxDegreesPerSecond = 5; // sensible default
-
-	UPROPERTY(EditAnywhere)
-		float MinRotationDegress = 0; // sensible default
-
-	UPROPERTY(EditAnywhere)
-		float MaxRotationDegrees = 180; // sensible default
+	float MaxDegreesPerSecond = 24; // sensible default
 };
