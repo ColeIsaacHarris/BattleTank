@@ -16,13 +16,8 @@ class BATTLETANK_API ATankAIController : public AAIController
 	GENERATED_BODY()
 
 public:
-
-	ATank * GetControlledTank() const;
 	
 private:
-	
-	// Aims toward current player
-	void AimTowardsPlayer();
 
 	// called every frame
 	virtual void Tick(float DeltaTime) override;
