@@ -3,6 +3,7 @@
 #include "Tank.h"
 #include "TankBarrel.h"
 #include "ShellProjectile.h"
+#include "TankMovementComponent.h"
 #include "TankAimingComponent.h"
 
 

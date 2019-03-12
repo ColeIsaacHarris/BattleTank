@@ -18,6 +18,8 @@ void ATankAIController::Tick(float DeltaTime)
 	// Aims towards player
 	if (PlayerTank)
 	{
+		MoveToActor(PlayerTank, AcceptableRadius);
+
 		ControlledTank->AimAt(PlayerTank->GetActorLocation());
 		ControlledTank->Fire(); // TODO limit fire rate
 	}

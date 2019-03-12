@@ -18,6 +18,8 @@ class BATTLETANK_API ATankAIController : public AAIController
 public:
 	
 private:
+	// How close the AI tank will get to player before stopping
+	float AcceptableRadius = 1000.0f;
 
 	// called every frame
 	virtual void Tick(float DeltaTime) override;
