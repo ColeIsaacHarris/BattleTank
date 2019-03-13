@@ -1,18 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankPlayerController.h"
+#include "TankAimingComponent.h"
 #include "tank.h"
 
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	auto ControlledTank = GetControlledTank();
-	if (!ControlledTank){
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController is not possessing a Tank"), ControlledTank);
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController is possessing: %s"), *(ControlledTank->GetName()));
-	}
+	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	if (ensure(AimingComponent)) { FoundAimingComponent(AimingComponent); }
+	else { UE_LOG(LogTemp, Warning, TEXT("Player Controller can't find AimingComponent on BeginPlay")); }
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -28,10 +25,10 @@ ATank * ATankPlayerController::GetControlledTank() const
 
 void ATankPlayerController::AimTowardsCrosshair() 
 {
-	if (!GetControlledTank()) { return; }
+	if (!ensure(GetControlledTank())) { return; }
 
 	FVector OutHitLocation(0); // Out parameter
-	if (GetSightRayHitLocation(OutHitLocation))
+	if (ensure(GetSightRayHitLocation(OutHitLocation)))
 	{
 		GetControlledTank()->AimAt(OutHitLocation);
 	}
@@ -47,7 +44,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 
 	// "De-Project the screen position of the reticle to world space
 	FVector LookDirection;
-	if (GetLookDirection(ReticleScreenLocation, LookDirection)) 
+	if (ensure(GetLookDirection(ReticleScreenLocation, LookDirection))) 
 	{
 		// line trace along  and see what we hit
 		return GetLookVectorHitLocation(OutHitLocation, LookDirection);
