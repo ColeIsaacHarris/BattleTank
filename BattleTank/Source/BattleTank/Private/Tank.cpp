@@ -11,14 +11,13 @@ ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
-/*void ATank::Initialize(UTankBarrel* BarrelToSet, UTankAimingComponent* TankAimingComponentToSet)
+void ATank::BeginPlay()
 {
-	Barrel = BarrelToSet;
-	TankAimingComponent = TankAimingComponentToSet;
-}*/
+	Super::BeginPlay();
+	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
+}
 
 void ATank::AimAt(FVector HitLocation)
 {
