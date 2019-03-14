@@ -8,7 +8,6 @@
 #include "TankAIController.generated.h"
 
 //Foward declarations
-class ATank;
 
 UCLASS()
 class BATTLETANK_API ATankAIController : public AAIController
