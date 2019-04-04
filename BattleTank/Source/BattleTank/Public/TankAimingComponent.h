@@ -40,7 +40,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void SetAmmoCount(int NewAmmoCount);
 
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Setup")	
+	TSubclassOf<AShellProjectile> ProjectileBlueprint;
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
@@ -57,16 +58,15 @@ private:
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
 	
-	UPROPERTY(VisibleAnywhere, Category = "Setup")
-	TSubclassOf<AShellProjectile> ProjectileBlueprint;
 
-	UPROPERTY(VisibleAnywhere, Category = "Firing")
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 100000; // TODO Find sensible default value
 
-	UPROPERTY(VisibleAnywhere, Category = "Firing")
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3.0;
 
-	UPROPERTY(VisibleAnywhere, Category = "Firing")
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	int32 AmmoCount = 3;
 
 	FVector AimDirection;
