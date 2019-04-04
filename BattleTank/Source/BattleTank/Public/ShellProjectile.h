@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "GameFramework/ProjectileMovementComponent.h"
+#include "Runtime/Engine/Classes/Particles/ParticleSystemComponent.h "
+#include "Runtime/Engine/Classes/GameFramework/ProjectileMovementComponent.h"
 #include "ShellProjectile.generated.h"
 
-// Forward Declarations
-class UProjectileMovementComponent;
+class UParticleSystemComponent;
 
 UCLASS()
 class BATTLETANK_API AShellProjectile : public AActor
@@ -19,16 +19,21 @@ public:
 	// Sets default values for this actor's properties
 	AShellProjectile();
 
-protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UProjectileMovementComponent * ProjectileMovementComponent = nullptr;
-
-public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	void LaunchProjectile(float Speed);
+
+private:
+	UProjectileMovementComponent* ProjectileMovementComponent = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UParticleSystemComponent* LaunchBlast = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UStaticMeshComponent* CollisionMesh = nullptr;
 	
 };

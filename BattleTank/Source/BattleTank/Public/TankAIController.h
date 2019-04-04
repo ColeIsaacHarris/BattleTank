@@ -15,10 +15,14 @@ class BATTLETANK_API ATankAIController : public AAIController
 	GENERATED_BODY()
 
 public:
+
+protected:
+
+	// How close the AI tank will get to player before stopping
+	UPROPERTY(EditDefaultsOnly, Category = "Setup") // Consider EditDefaultsOnly
+	float AcceptableRadius = 1000.0f;
 	
 private:
-	// How close the AI tank will get to player before stopping
-	float AcceptableRadius = 1000.0f;
 
 	// called every frame
 	virtual void Tick(float DeltaTime) override;

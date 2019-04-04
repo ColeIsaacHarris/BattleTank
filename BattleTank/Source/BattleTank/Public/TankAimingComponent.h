@@ -9,7 +9,7 @@
 
 // Enum for aiming state
 UENUM()
-enum class EFiringState : uint8 {Reloading, Aiming, Locked};
+enum class EFiringState : uint8 {Reloading, Aiming, Locked, OutOfAmmo};
 
 // Forward declarations
 class UTankBarrel; 
@@ -29,8 +29,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
 
+	EFiringState GetFiringState();
+
 	// Calculates a HitLocation based on the LaunchSpeed and moves the barrel and turret to aim at that HitLocation
 	void AimAt(FVector HitLocation);
+
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	int32 GetAmmoCount() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	void SetAmmoCount(int NewAmmoCount);
+
+
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
@@ -47,13 +57,18 @@ private:
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
 	
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
 	TSubclassOf<AShellProjectile> ProjectileBlueprint;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	UPROPERTY(VisibleAnywhere, Category = "Firing")
 	float LaunchSpeed = 100000; // TODO Find sensible default value
-	
+
+	UPROPERTY(VisibleAnywhere, Category = "Firing")
 	float ReloadTimeInSeconds = 3.0;
+
+	UPROPERTY(VisibleAnywhere, Category = "Firing")
+	int32 AmmoCount = 3;
+
 	FVector AimDirection;
 	double LastFireTime = 0;
 
