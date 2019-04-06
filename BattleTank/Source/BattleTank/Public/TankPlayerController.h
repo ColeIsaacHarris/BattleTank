@@ -28,6 +28,11 @@ private:
 	//called on begin play
 	virtual void BeginPlay() override;
 
+	virtual void SetPawn(APawn* InPawn) override;
+	
+	UFUNCTION()
+	void OnTankDeath();
+
 	// Calls GetSightRayHitLocation returning Line Trace OutHitLocation, then calls Tank AimAt feeding in OutHitLocation
 	void AimTowardsCrosshair();
 
@@ -45,4 +50,5 @@ private:
 
 	bool GetLookDirection(FVector2D ScreenLocation, FVector & LookDirection) const;
 	bool GetLookVectorHitLocation(FVector& OutHitLocation, FVector LookDirection) const;
+
 };

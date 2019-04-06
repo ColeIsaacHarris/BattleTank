@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "Runtime/Engine/Classes/Particles/ParticleSystemComponent.h "
+#include "Runtime/Engine/Classes/PhysicsEngine/RadialForceComponent.h "
 #include "Runtime/Engine/Classes/GameFramework/ProjectileMovementComponent.h"
 #include "ShellProjectile.generated.h"
 
@@ -27,6 +29,8 @@ public:
 
 	void LaunchProjectile(float Speed);
 
+
+
 private:
 	UProjectileMovementComponent* ProjectileMovementComponent = nullptr;
 
@@ -34,6 +38,23 @@ private:
 	UParticleSystemComponent* LaunchBlast = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UParticleSystemComponent* ImpactBlast = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UStaticMeshComponent* CollisionMesh = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	URadialForceComponent* ExplosionForce = nullptr;
 	
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float DestroyDelay = 3.0f; // Time before Projectile is destroyed after collision
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float ProjectileDamage = 20.0f;
+
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalInpulse, const FHitResult& Hit);
+	
+	UFUNCTION()
+	void OnTimerExpire();
 };

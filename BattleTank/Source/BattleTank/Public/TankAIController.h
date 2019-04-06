@@ -16,6 +16,8 @@ class BATTLETANK_API ATankAIController : public AAIController
 
 public:
 
+
+
 protected:
 
 	// How close the AI tank will get to player before stopping
@@ -24,11 +26,15 @@ protected:
 	
 private:
 
+	UFUNCTION()
+	void OnTankDeath(); // Called when possessed tank dies
+
 	// called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// called at begin play
 	virtual void BeginPlay() override;
 
+	virtual void SetPawn(APawn* InPawn) override;
 };
 
