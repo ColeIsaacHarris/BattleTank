@@ -9,11 +9,11 @@
 /**
  * TankTrack is used to set max max driving force, and apply said force to tank
  */
+
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankTrack : public UStaticMeshComponent
 {
 	GENERATED_BODY()
-	
 	
 public:
 	// Sets a throttle between -1 and +1
@@ -29,12 +29,8 @@ private:
 	virtual void BeginPlay() override;
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction);
 
-	void ApplySidewaysForce();
-	void ApplyThrottleForce();
+	void DriveTrack(float CurrentThrottle);
 
-	float CurrentThrottle = 0;
-
-	UFUNCTION()
-	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalInpulse, const FHitResult& Hit);
+	TArray<class ASprungWheel*> GetWheels() const;
 
 };
